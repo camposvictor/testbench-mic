@@ -36,8 +36,8 @@
 # -------------------------------------------------------------------------- #
 
 
-set_global_assignment -name FAMILY "MAX 10"
-set_global_assignment -name DEVICE 10M08DAF484C8G
+set_global_assignment -name FAMILY "Cyclone 10 LP"
+set_global_assignment -name DEVICE Auto
 set_global_assignment -name TOP_LEVEL_ENTITY PROJETO_MIC
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:32:17  JULY 16, 2022"
