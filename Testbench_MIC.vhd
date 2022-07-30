@@ -72,41 +72,41 @@ ARCHITECTURE Type_3 OF Testbench IS
             WR_OUTPUT : OUT STD_LOGIC;
             Z : OUT STD_LOGIC;
             N : OUT STD_LOGIC);
-    END COMPONENT
+    END COMPONENT;
 
-BEGIN
-
-    FUNCTION Clk_Period(n : INTEGER := 1) RETURN INTEGER IS VARIABLE Total_Ns : INTEGER;
+    FUNCTION Clk_To_Ns(n : INTEGER := 1) RETURN TIME IS VARIABLE Total_Ns : TIME;
     BEGIN
         Total_Ns := n * Clk_period;
-        RETURN Total_Ns
-    END FUNCTION
+        RETURN Total_Ns;
+    END FUNCTION;
+
+BEGIN
 
     Dut : PROJETO_MIC
 
     PORT MAP(
-        CLK => Signal_Clk;
-        RESET => Signal_Reset;
-        AMUX => Signal_Amux;
-        ALU => Signal_Alu;
-        MBR => Signal_Mbr;
-        MAR => Signal_Mar;
-        RD => Signal_Rd;
-        WR => Signal_Wr;
-        ENC => Signal_Enc;
-        C => Signal_C_Address;
-        B => Signal_B_Address;
-        A => Signal_A_Address;
-        SH => Signal_Sh;
-        MEM_TO_MBR => Signal_Mem_To_Mbr;
-        DATA_OK => Signal_Data_Ok;
-        MBR_TO_MEM => Signal_Mbr_To_Mem;
-        MAR_OUTPUT => Signal_Mar_Output;
-        RD_OUTPUT => Signal_Rd_Output;
-        WR_OUTPUT => Signal_Wr_Output;
-        Z => Signal_Z;
-        N => Signal_N;
-    )
+        CLK => Signal_Clk,
+        RESET => Signal_Reset,
+        AMUX => Signal_Amux,
+        ALU => Signal_Alu,
+        MBR => Signal_Mbr,
+        MAR => Signal_Mar,
+        RD => Signal_Rd,
+        WR => Signal_Wr,
+        ENC => Signal_Enc,
+        C => Signal_C_Address,
+        B => Signal_B_Address,
+        A => Signal_A_Address,
+        SH => Signal_Sh,
+        MEM_TO_MBR => Signal_Mem_To_Mbr,
+        DATA_OK => Signal_Data_Ok,
+        MBR_TO_MEM => Signal_Mbr_To_Mem,
+        MAR_OUTPUT => Signal_Mar_Output,
+        RD_OUTPUT => Signal_Rd_Output,
+        WR_OUTPUT => Signal_Wr_Output,
+        Z => Signal_Z,
+        N => Signal_N);
+
     Clock_Process : PROCESS
     BEGIN
         Signal_Clk <= '0';
@@ -140,6 +140,4 @@ BEGIN
     BEGIN
 
     END PROCESS Output_Process;
-
-
 END Type_3;
