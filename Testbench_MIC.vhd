@@ -76,6 +76,12 @@ ARCHITECTURE Type_3 OF Testbench IS
 
 BEGIN
 
+    FUNCTION Clk_Period(n : INTEGER := 1) RETURN INTEGER IS VARIABLE Total_Ns : INTEGER;
+    BEGIN
+        Total_Ns := n * Clk_period;
+        RETURN Total_Ns
+    END FUNCTION
+
     Dut : PROJETO_MIC
 
     PORT MAP(
@@ -114,5 +120,26 @@ BEGIN
         END IF;
 
     END PROCESS Clock_Process;
+
+    Reset_Process : PROCESS
+    BEGIN
+
+    END PROCESS Reset_Process;
+
+    Enc_Process : PROCESS
+    BEGIN
+
+    END PROCESS Enc_Process;
+
+    Input_Process : PROCESS
+    BEGIN
+
+    END PROCESS Input_Process;
+
+    Output_Process : PROCESS
+    BEGIN
+
+    END PROCESS Output_Process;
+
 
 END Type_3;
