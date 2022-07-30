@@ -1,0 +1,301 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "MBR_TO_MEM[0]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[1]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[2]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[3]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[4]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[5]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[6]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[7]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[8]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[9]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[10]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[11]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[12]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[13]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[14]",
+					"strict" : false
+				},
+				{
+					"name" : "MBR_TO_MEM[15]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[0]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[1]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[2]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[3]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[4]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[5]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[6]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[7]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[8]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[9]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[10]",
+					"strict" : false
+				},
+				{
+					"name" : "MAR_OUTPUT[11]",
+					"strict" : false
+				},
+				{
+					"name" : "RD_OUTPUT",
+					"strict" : false
+				},
+				{
+					"name" : "WR_OUTPUT",
+					"strict" : false
+				},
+				{
+					"name" : "Z",
+					"strict" : false
+				},
+				{
+					"name" : "N",
+					"strict" : false
+				},
+				{
+					"name" : "ALU[0]",
+					"strict" : false
+				},
+				{
+					"name" : "B[3]",
+					"strict" : false
+				},
+				{
+					"name" : "B[0]",
+					"strict" : false
+				},
+				{
+					"name" : "B[2]",
+					"strict" : false
+				},
+				{
+					"name" : "B[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ALU[1]",
+					"strict" : false
+				},
+				{
+					"name" : "A[3]",
+					"strict" : false
+				},
+				{
+					"name" : "A[0]",
+					"strict" : false
+				},
+				{
+					"name" : "A[2]",
+					"strict" : false
+				},
+				{
+					"name" : "A[1]",
+					"strict" : false
+				},
+				{
+					"name" : "AMUX",
+					"strict" : false
+				},
+				{
+					"name" : "SH[1]",
+					"strict" : false
+				},
+				{
+					"name" : "SH[0]",
+					"strict" : false
+				},
+				{
+					"name" : "CLK",
+					"strict" : false
+				},
+				{
+					"name" : "RESET",
+					"strict" : false
+				},
+				{
+					"name" : "MBR",
+					"strict" : false
+				},
+				{
+					"name" : "MAR",
+					"strict" : false
+				},
+				{
+					"name" : "RD",
+					"strict" : false
+				},
+				{
+					"name" : "WR",
+					"strict" : false
+				},
+				{
+					"name" : "C[3]",
+					"strict" : false
+				},
+				{
+					"name" : "C[0]",
+					"strict" : false
+				},
+				{
+					"name" : "C[2]",
+					"strict" : false
+				},
+				{
+					"name" : "C[1]",
+					"strict" : false
+				},
+				{
+					"name" : "ENC",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[14]",
+					"strict" : false
+				},
+				{
+					"name" : "DATA_OK",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[13]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[12]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[11]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[10]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[9]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[8]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[7]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[6]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[5]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[4]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[3]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[2]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[1]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[0]",
+					"strict" : false
+				},
+				{
+					"name" : "MEM_TO_MBR[15]",
+					"strict" : false
+				}
+			]
+		}
+	]
+}
