@@ -15,7 +15,7 @@ Architecture Type_0 OF Testbench_MIC_Banck_Registers IS
 CONSTANT Clk_period : time := 40 ns;
 SIGNAL Clk_count : integer := 0;
 
--- Declaração de sinais (entrada e saída) que conectarão o projeto ao teste
+-- Declaraï¿½ï¿½o de sinais (entrada e saï¿½da) que conectarï¿½o o projeto ao teste
 SIGNAL 	Signal_Reset		: std_logic := '0';
 SIGNAL	Signal_Clk		: std_logic := '0';
 SIGNAL	Signal_Enc		: std_logic := '0';
@@ -26,11 +26,11 @@ SIGNAL	Signal_C_Input		: std_logic_vector(15 DOWNTO 0) := "0000000000000000";
 SIGNAL	Signal_A_Output		: std_logic_vector(15 DOWNTO 0) := "0000000000000000";
 SIGNAL	Signal_B_Output		: std_logic_vector(15 DOWNTO 0) := "0000000000000000";
 
--- Declaração de sinais que definirão a saída esperada quando o projeto for simulado
+-- Declaraï¿½ï¿½o de sinais que definirï¿½o a saï¿½da esperada quando o projeto for simulado
 --SIGNAL Expected_A_Output	: std_logic_vector(15 DOWNTO 0);
 --SIGNAL Expected_B_Output	: std_logic_vector(15 DOWNTO 0);
 
--- Instanciação do projeto a ser testado
+-- Instanciaï¿½ï¿½o do projeto a ser testado
 COMPONENT MIC_Banck_Registers IS
 
 PORT	(
@@ -47,7 +47,7 @@ END COMPONENT;
 
 BEGIN
 
--- Instanciação do projeto a ser testado
+-- Instanciaï¿½ï¿½o do projeto a ser testado
 Dut: MIC_Banck_Registers
 
 PORT MAP (
@@ -62,7 +62,7 @@ PORT MAP (
 	B_Output	=> Signal_B_Output
 );
 
--- Processo que define o relógio. Faremos um relógio de 40 ns
+-- Processo que define o relï¿½gio. Faremos um relï¿½gio de 40 ns
 Clock_Process : PROCESS 
   Begin
     Signal_Clk <= '0';
@@ -92,7 +92,7 @@ Reset_Process : PROCESS
 End Process Reset_Process;
 
 
--- Nosso teste consistira em escritas sucessivas (iniciando com o valor '1') com sucesso (Enc = 1) no banco de registradores, seguindo de tentativas de escrita sem sucesso (Enc = 0). Assim, Enc terá o valor '0' durante o cilco de Reset e, posteriormente, se manterá em '1' por 16 ciclos. Terminados os testes de escrita, Enc ira para zero até o final do teste.
+-- Nosso teste consistira em escritas sucessivas (iniciando com o valor '1') com sucesso (Enc = 1) no banco de registradores, seguindo de tentativas de escrita sem sucesso (Enc = 0). Assim, Enc terï¿½ o valor '0' durante o cilco de Reset e, posteriormente, se manterï¿½ em '1' por 16 ciclos. Terminados os testes de escrita, Enc ira para zero atï¿½ o final do teste.
 
 
 Enc_Process : PROCESS 
@@ -106,11 +106,11 @@ Enc_Process : PROCESS
     wait;
 End Process Enc_Process;
 
--- Processo de definição de entrada. Durante o teste de escrita, estaremos PC e AC para os barramentos A e B, respectivamente
+-- Processo de definiï¿½ï¿½o de entrada. Durante o teste de escrita, estaremos PC e AC para os barramentos A e B, respectivamente
 
 Input_Process : PROCESS 
   Begin
--- Especificação inicial de valores ---
+-- Especificaï¿½ï¿½o inicial de valores ---
        Signal_A_Address <= "0000"; -- Leitura de PC
        Signal_B_Address <= "0001"; -- Leitura de AC
        Signal_C_Address <= "0000"; -- Escreve em PC
@@ -180,7 +180,7 @@ Input_Process : PROCESS
        Signal_C_Input <= "0000000000001001"; 
        Signal_C_Address <= "1111"; -- Escreve '9'em F
 
--- Terminados os 16 ciclos (40 ns cada ciclo) de leitura, todos os registradores serão lidos, tanto pelo barramento A quanto pelo barramento B. As leituras iniciarão do último registrador escrito (F) para o primeiro (PC
+-- Terminados os 16 ciclos (40 ns cada ciclo) de leitura, todos os registradores serï¿½o lidos, tanto pelo barramento A quanto pelo barramento B. As leituras iniciarï¿½o do ï¿½ltimo registrador escrito (F) para o primeiro (PC
 
 
        wait for 40 ns;
@@ -303,15 +303,15 @@ REPORT "A_Output: "  & integer'image(to_integer(unsigned(Signal_A_Output)));
 REPORT "B_Address: "  & integer'image(to_integer(unsigned(Signal_B_Address)));
 REPORT "B_Output: "  & integer'image(to_integer(unsigned(Signal_B_Output)));
 
-            wait;
+       wait;
 
 End Process Input_Process;
 
 
 
--- Neste Testebench  os valores de saída serão impressos e não verificados (Testbench tipo 0). Isto também tem objetivo didático de mostrar como a impressão pode ser feita. (Para outras formas e formatos de impressão pesquisar na literatura em em muitos guias disponíveis na internet);
+-- Neste Testebench  os valores de saï¿½da serï¿½o impressos e nï¿½o verificados (Testbench tipo 0). Isto tambï¿½m tem objetivo didï¿½tico de mostrar como a impressï¿½o pode ser feita. (Para outras formas e formatos de impressï¿½o pesquisar na literatura em em muitos guias disponï¿½veis na internet);
 
--- As subidas do relógio ocorrem a cada 20 ns, os registradores são escritos na subida do relógio, assim, os valores de saída serão impressos nas subidas do relógio (a cada 20 ns. 
+-- As subidas do relï¿½gio ocorrem a cada 20 ns, os registradores sï¿½o escritos na subida do relï¿½gio, assim, os valores de saï¿½da serï¿½o impressos nas subidas do relï¿½gio (a cada 20 ns. 
 
 
 -- Printg_Process : Process 
@@ -361,7 +361,7 @@ End Process Input_Process;
 
 --        IF NOW = 1360 ns THEN     
 --    	  ASSERT FALSE
---			REPORT "Simulação concluída com sucesso! em 1360 ns"; 
+--			REPORT "Simulaï¿½ï¿½o concluï¿½da com sucesso! em 1360 ns"; 
 --            wait;
 --             END IF;
                          
