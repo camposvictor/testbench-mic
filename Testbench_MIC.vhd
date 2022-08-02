@@ -198,6 +198,19 @@ BEGIN
 			Signal_A_Address <= A_Address;
 			Signal_B_Address <= B_Address;
 		END PROCEDURE;
+		
+		PROCEDURE BandRegisters(
+			A_Address : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+			B_Address : IN STD_LOGIC_VECTOR(3 DOWNTO 0)) IS
+		BEGIN
+			Signal_Mbr <= '0';
+			Signal_Enc <= '0';
+			Signal_Sh <= "00";
+			Signal_Alu <= "01";
+			Signal_Amux <= '0';
+			Signal_A_Address <= A_Address;
+			Signal_B_Address <= B_Address;
+		END PROCEDURE;
 
 	BEGIN
 		Signal_Data_ok <= '1';
@@ -231,10 +244,14 @@ BEGIN
 
 		--- INSP ---
 		WAIT FOR 40 ns;
-		MbrTransparency("0000000000001111");
+		MbrTransparency("1111110000001111");
 		StoreInRegister("1010");
-
 		-- A = 15
+		
+		WAIT FOR 40 ns;
+		BandRegisters("1001", "1010");
+		StoreInRegister("1010");
+		-- A = BAND(A, SMASK)
 
 		WAIT FOR 40 ns;
 
@@ -266,7 +283,7 @@ BEGIN
 		WAIT FOR 120 ns;
 		Expected_Mbr_To_Mem <= "0000000000000111";
 
-		WAIT FOR 160 ns;
+		WAIT FOR 200 ns;
 		Expected_Mbr_To_Mem <= "0000000000001111";
 
 		WAIT;
@@ -281,7 +298,7 @@ BEGIN
 		REPORT "O RESULTADO DIFERE: OBTIDO - " & INTEGER'image(to_integer(unsigned(Signal_Mbr_To_mem))) & " ESPERADO - " & INTEGER'image(to_integer(unsigned(Expected_Mbr_To_Mem)))
 			SEVERITY failure;
 
-		IF now = 460 ns THEN
+		IF now = 500 ns THEN
 			ASSERT false
 			REPORT "SIMULACAO CONCLUIDA COM SUCESSO"
 				SEVERITY failure;
