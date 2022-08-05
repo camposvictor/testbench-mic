@@ -9,15 +9,17 @@ USE ieee.std_logic_unsigned.ALL;
 USE std.textio.ALL;
 
 ----------- Entidade do Testbench -------
-ENTITY Testbench_MIC IS
+ENTITY Testebench_LOCO IS
 
-END Testbench_MIC;
+END Testebench_LOCO;
 
 ----------- Arquitetura do Testbench -------
-ARCHITECTURE Type_1 OF Testbench_MIC IS
+ARCHITECTURE Type_3 OF Testebench_LOCO IS
 
     CONSTANT Clk_period : TIME := 40 ns;
     SIGNAL Clk_count : INTEGER := 0;
+	 SIGNAL Expected_Mbr_To_Mem : STD_LOGIC_VECTOR(15 DOWNTO 0) := "0000000000000000";
+	 
 
     -- Declaração dos sinais (entrada e saída) que conectarão o projeto ao teste
 
@@ -111,8 +113,8 @@ Clock_Process : PROCESS
 
 
 
-IF (Clk_count = 12) THEN     
-REPORT "Stopping simulation after 12 cycles";
+IF (Clk_count = 9) THEN     
+REPORT "Stopping simulation after 9 cycles";
     	  Wait;       
 END IF;
 
@@ -131,122 +133,67 @@ Reset_Process : PROCESS
 End Process Reset_Process;
 
 Input_Process : PROCESS 
-  Begin
-
-   --SIMULAR A BUSCA
-   -- pc:= valor qualquer 
-   -- mar:= pc;
-   -- mbr:= mem_to_mbr;
-   -- ir:= mbr;
-   -- pc:= pc + 1;
-
-   ----------------
-   --STOD-----------
-   -- primeiramente foi feito um LODD para definir um valor inicial a AC
-    --para o stod primeiramente está sendo carregado um valor em ac
-	 
-	 --mar:=ir,rd;(sendo ir um valor qualquer colocado arbitrariamente)
-	 --rd;
-	 --ac:=mbr(que aqui no caso é mem_to_mbr)
-	--após isso o valor AC é colocado na memória(mbr_to_mem)
-	
-
-      wait for 40 ns;
-       Signal_Data_ok <='1';
-       Signal_Mem_to_mbr <= "0000000000000001";--valor X a ser alocado em PC
-       Signal_Rd <= '1';
-		
-       wait for 40 ns;
-		 
-       Signal_Data_ok<='0';
-       Signal_Amux <= '1';
-       Signal_Alu <= "10";
-       Signal_Sh <= "00";
-       Signal_C_Address <= "0000"; -- PC = X
-       Signal_Enc <= '1';
-       Signal_Rd <= '0';
-
-       wait for 40 ns;
-
-       Signal_Enc <= '0';
-       Signal_B_Address <= "0000";
-       Signal_Mar <= '1'; -- MAR = PC (X)
-       Signal_Rd <= '1';
-		 
-       wait for 40 ns;
-		 
-       Signal_Data_ok<='1';
-       Signal_Mbr <= '0';
-       Signal_Mem_to_mbr <= "0000000000001000"; --valor para IR 
-       Signal_Rd <= '1';
-
-       wait for 40 ns;
-		 
-       Signal_Data_ok<='0';
-       Signal_Amux <= '1';
-       Signal_Alu <= "10";
-       Signal_Sh <= "00";
-       Signal_C_Address <= "0011"; -- IR = MBR
-       Signal_Enc <= '1';
-       Signal_Mbr <= '0';
-		  Signal_Rd <= '0';
-		 
---desconsiderando a decodificação--
-
-       wait for 40 ns;
-
-       Signal_B_Address <= "0011";
-       Signal_Mar <= '1'; -- MAR = IR;
-       Signal_Rd <= '1';
-		 
-       
-       wait for 40 ns;
-		 
-       Signal_Data_ok<='1';--valor suposto arbitrariamente no endereco ir na memória sendo alocado em mbr 
-       Signal_Mbr <= '0';
-       Signal_Mem_to_mbr <= "0000000000000110"; -- M[X] qualquer com valor =6
-       Signal_Rd <= '0';
-
-       wait for 40 ns;
-		 
-       Signal_Data_ok<='0';
-       Signal_C_Address <= "0001";
-       Signal_Amux <= '1';
-       Signal_Alu <= "10";--AC=m[x]=6
-       Signal_Sh <= "00";
-       Signal_Enc <= '1';
-       Signal_Mbr <= '0';
-		 
-		 --stod x--
-		--mar=ir;mbr=ac wr;
-		--wr;goto 0
-		
-		
-		 wait for 40 ns;
-       Signal_Data_ok <= '0';
-       Signal_B_Address <= "0011";
-       Signal_A_Address <= "0001";
-       Signal_Mar <= '1'; -- MAR = IR=8;
-		 Signal_Sh <= "00";
-		 Signal_Enc<='0';
-		 Signal_Wr<='1';
-		 Signal_Amux<='0';
-		 Signal_mbr<='1';
-		wait; 
-		 
-		 
-END Process Input_Process;
-
-Printg_Process : Process 
- Begin
-		Wait for 40 ns;
-		ASSERT ((Signal_z = '0') and (Signal_n = '0') and (Signal_Rd_output = '0')) 
-		--and (Signal_Wr_output /= '0') and (Signal_Mar_to_mem /= '000000000000') 
-		--and (Signal_Mbr_to_mem /= '0000000000000000'))
-		REPORT "Valores corretos!"
-		SEVERITY NOTE;
+  Begin	
+		--LOCO
 		wait for 40 ns;
- 
-END process Printg_Process;
+		 Signal_Data_ok <='1';
+		 Signal_Mem_to_mbr <= "0111000000000100"; --Palavra que vai para IR
+		
+		wait for 40 ns;
+		 Signal_Data_ok<='0';
+		 Signal_Amux <= '1';
+		 Signal_Alu <= "10";
+		 Signal_Sh <= "00";
+		 Signal_C_Address <= "0011"; --IR
+		 Signal_Enc <= '1';
+		 
 
-END Type_1;
+		wait for 40 ns;
+		 Signal_Data_ok <= '0';
+       Signal_B_Address <= "0011"; --IR
+       Signal_A_Address <= "1000"; --AMASK 
+		 Signal_Amux<='0';
+		 Signal_Sh <= "00";
+		 Signal_Alu <= "01";
+		 Signal_Enc<='1';
+		 Signal_C_Address <= "0001";
+		 
+		wait for 40 ns;
+       Signal_A_Address <= "0001";
+		 Signal_Enc<='0';
+		 Signal_Amux<='0';
+		 Signal_Sh <= "00";
+		 Signal_Alu <= "10";
+		 Signal_Mbr<='1';
+		 Signal_Wr<='1';
+		 
+END Process Input_Process; 
+
+PROCESS IS -- PROCESSO DOS VALORES ESPERADOS
+	BEGIN
+		WAIT FOR 20 ns;
+
+		WAIT FOR 160 ns;
+		Expected_Mbr_To_Mem <= "0000000000000100";
+
+		WAIT;
+
+	END PROCESS;
+
+	PROCESS IS -- PROCESSO DO ASSERT, VERIFICA A CADA 20 NS
+	BEGIN
+		WAIT FOR 20 ns;
+
+		ASSERT Expected_Mbr_To_Mem = Signal_Mbr_To_mem
+		REPORT "O RESULTADO DIFERE: OBTIDO - " & INTEGER'image(to_integer(unsigned(Signal_Mbr_To_mem))) & " ESPERADO - " & INTEGER'image(to_integer(unsigned(Expected_Mbr_To_Mem)))
+			SEVERITY failure;
+
+		IF now = 200 ns THEN
+			ASSERT false
+			REPORT "SIMULACAO CONCLUIDA COM SUCESSO"
+				SEVERITY failure;
+		END IF;
+
+	END PROCESS;
+
+END Type_3;

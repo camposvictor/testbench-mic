@@ -1,23 +1,27 @@
+-- PRIMEIRO DECLARAR OS SINAIS DE CONTROLE --
+-- SEGUNDO INSTANCIAR AS PORTS DO PROJETO MIC --
+-- TERCEIRO CONECTAR OS SINAIS AS PORTS DENTRO DO OBJETO DUT --
+
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 USE IEEE.numeric_std.ALL;
 USE ieee.std_logic_unsigned.ALL;
 USE std.textio.ALL;
 
------------ ENTIDADE -----------
+----------- Entidade do Testbench -------
+ENTITY Testebench_Shift IS
 
-ENTITY testebennch_MIC_ADDD IS
+END Testebench_Shift;
 
-END testebennch_MIC_ADDD;
-
------------ ARQUITETURA --------
-
-ARCHITECTURE Type_1 OF testebennch_MIC_ADDD IS
+----------- Arquitetura do Testbench -------
+ARCHITECTURE Type_3 OF Testebench_Shift IS
 
     CONSTANT Clk_period : TIME := 40 ns;
     SIGNAL Clk_count : INTEGER := 0;
+	 SIGNAL Expected_Mbr_To_Mem : STD_LOGIC_VECTOR(15 DOWNTO 0) := "0000000000000000";
+	 
 
-    -- DeclaraÃ§Ã£o dos sinais (entrada e saida) que ligam o projeto ao teste
+    -- Declaração dos sinais (entrada e saída) que conectarão o projeto ao teste
 
     SIGNAL Signal_Clk : STD_LOGIC := '0';
     SIGNAL Signal_Reset : STD_LOGIC := '0';
@@ -41,7 +45,7 @@ ARCHITECTURE Type_1 OF testebennch_MIC_ADDD IS
 	 SIGNAL Signal_Rd_OUTPUT :  STD_LOGIC := '0';
     SIGNAL Signal_Wr_OUTPUT : STD_LOGIC := '0';
 
-	 --------- INSTANCIAÃ‡ÃƒO ----------
+-- INSTANCIAÇÃO --
 
     COMPONENT PROJETO_MIC is
         PORT (
@@ -102,15 +106,17 @@ PORT MAP(
 Clock_Process : PROCESS 
   Begin
     Signal_Clk <= '0';
-    wait for Clk_period/2;  --  Espera por 20ns com clock em nivel baixo
+    wait for Clk_period/2;  --for 0.5 ns signal is '0'.
     Signal_Clk  <= '1';
     Clk_count <= Clk_count + 1;
-    wait for Clk_period/2;  --  Espera por 20ns com clock em nivel alto
+    wait for Clk_period/2;  --for next 0.5 ns signal is '1'.
 
-IF (Clk_count = 14) THEN     
-	REPORT "Parando a simulacao apos 12 ciclos";
-			  Wait;       
-	END IF;
+
+
+IF (Clk_count = 9) THEN     
+REPORT "Stopping simulation after 9 cycles";
+    	  Wait;       
+END IF;
 
 End Process Clock_Process;
 
@@ -127,56 +133,78 @@ Reset_Process : PROCESS
 End Process Reset_Process;
 
 Input_Process : PROCESS 
-  Begin
-wait for 40 ns;
+  Begin	
+		--TESTANDO O DESLOCAMENTO
 		wait for 40 ns;
 		 Signal_Data_ok <='1';
-		 Signal_Mem_to_mbr <= "0111000000000100"; --Palavra que vai para IR
+		 Signal_Mem_to_mbr <= "0000000000001111"; --Dado que vai estar em AC
 		
 		wait for 40 ns;
 		 Signal_Data_ok<='0';
 		 Signal_Amux <= '1';
 		 Signal_Alu <= "10";
 		 Signal_Sh <= "00";
-		 Signal_C_Address <= "0011"; --IR
+		 Signal_C_Address <= "0001"; --AC
 		 Signal_Enc <= '1';
 		 
-
 		wait for 40 ns;
-		 Signal_Data_ok <= '0';
-       Signal_B_Address <= "0011"; --IR
-       Signal_A_Address <= "1000"; --AMASK 
-		 Signal_Amux<='0';
-		 Signal_Sh <= "00";
-		 Signal_Alu <= "01";
-		 Signal_Enc<='1';
-		 Signal_C_Address <= "0001";
-		 
-		wait for 40 ns;
-       Signal_A_Address <= "0001";
+       Signal_A_Address <= "0001"; --AC
 		 Signal_Enc<='0';
 		 Signal_Amux<='0';
-		 Signal_Sh <= "00";
 		 Signal_Alu <= "10";
-		 Signal_Mbr<='1';
+		 Signal_Sh <= "00";
+		 Signal_Mbr<='1'; 
 		 Signal_Wr<='1';
-		
-		 wait; 
-		
-		
 		 
-END Process Input_Process;
-
-Printg_Process : Process 
- Begin
-		Wait for 40 ns;
-		ASSERT ((Signal_z = '0') and (Signal_n = '0') and (Signal_Rd_output = '0')) 
-		--and (Signal_Wr_output /= '0') and (Signal_Mar_to_mem /= '000000000000') 
-		--and (Signal_Mbr_to_mem /= '0000000000000000'))
-		REPORT "Valores corretos!"
-		SEVERITY NOTE;
+		wait for 40 ns; 
+		 REPORT "Valor de AC: "  & integer'image(to_integer(unsigned(Signal_Mbr_To_mem)));
+		 
 		wait for 40 ns;
- 
-END process Printg_Process;
+       Signal_A_Address <= "0001"; --AC
+		 Signal_Enc<='0';
+		 Signal_Amux<='0';
+		 Signal_Alu <= "10";
+		 Signal_Sh <= "01"; --10 para deslocamento à direita
+		 Signal_Mbr<='1'; 
+		 Signal_Wr<='1';
+		 
+		wait for 40 ns; 
+		 REPORT "Valor de SH: "  & integer'image(to_integer(unsigned(Signal_Sh)));
+		 REPORT "Valor de AC apos o deslocamento : "  & integer'image(to_integer(unsigned(Signal_Mbr_To_mem)));
+		 
+		wait;
+		 
+END Process Input_Process; 
 
-END Type_1;
+PROCESS IS -- PROCESSO DOS VALORES ESPERADOS
+	BEGIN
+		WAIT FOR 20 ns;
+
+		WAIT FOR 120 ns;
+		Expected_Mbr_To_Mem <= "0000000000001111";
+		
+		WAIT FOR 80 ns;
+		Expected_Mbr_To_Mem <= "0000000000011110";
+
+
+		WAIT;
+
+	END PROCESS;
+
+	PROCESS IS -- PROCESSO DO ASSERT, VERIFICA A CADA 20 NS
+	BEGIN
+		WAIT FOR 20 ns;
+
+		ASSERT Expected_Mbr_To_Mem = Signal_Mbr_To_mem
+		REPORT "O RESULTADO DIFERE: OBTIDO - " & INTEGER'image(to_integer(unsigned(Signal_Mbr_To_mem))) & " ESPERADO - " & INTEGER'image(to_integer(unsigned(Expected_Mbr_To_Mem)))
+			SEVERITY failure;
+
+		IF now = 280 ns THEN
+			ASSERT false
+			REPORT "SIMULACAO CONCLUIDA COM SUCESSO"
+				SEVERITY failure;
+		END IF;
+
+	END PROCESS;
+
+END Type_3;
